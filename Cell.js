@@ -35,11 +35,11 @@ class Cell {
         this.nbBombsNeighbour += grid[this.x + 1][this.y - 1].isBomb
         // this.bombsNeighbour.push(grid[this.x + 1][this.y - 1])
       }
-      if (this.x  > 0 && this.y < nbCols - 1) { // BOTTOM LEFT
+      if (this.x  > 0 && this.y < nbRows - 1) { // BOTTOM LEFT
         this.nbBombsNeighbour += grid[this.x - 1][this.y + 1].isBomb
         // this.bombsNeighbour.push(grid[this.x - 1][this.y + 1])
       }
-      if (this.x  < nbRows - 1 && this.y < nbCols - 1) { // BOTTOM RIGHT
+      if (this.x  < nbCols - 1 && this.y < nbRows - 1) { // BOTTOM RIGHT
         this.nbBombsNeighbour += grid[this.x + 1][this.y + 1].isBomb
         // this.bombsNeighbour.push(grid[this.x + 1][this.y + 1])
       }

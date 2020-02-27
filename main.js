@@ -3,6 +3,7 @@ let nbBombs = 50
 let nbCols = 20
 let nbRows = 20
 let gridTable
+let formLevel
 
 window.addEventListener("DOMContentLoaded", function(event) {
   setup()
@@ -26,16 +27,20 @@ function indexToCoord(index, nbCols, nbRows) {
 
 function finish(win) {
   console.log('finish', win)
-  let restart
+  let isRestart
   if (win) {
-    restart = confirm("Tu as Gagné! Bravo Champion!\nTu veux recommencer?")
+    isRestart = confirm("Tu as Gagné! Bravo Champion!\nTu veux recommencer?")
   } else {
-    restart = confirm("Tu as perdu... Je m'en doutais!\n Tu veux une nouvelle chance?")
+    isRestart = confirm("Tu as perdu... Je m'en doutais!\n Tu veux une nouvelle chance?")
   }
-  if (restart) {
-    gridTable.innerHTML = ""
-    setup()
+  if (isRestart) {
+    restart()
   }
+}
+
+function restart() {
+  gridTable.innerHTML = ""
+  setup()
 }
 
 function refresh() {
@@ -53,13 +58,47 @@ function refresh() {
   }
 }
 
+function changeLevel(level) {
+  console.log(level)
+  switch (level) {
+    case 'lvl0':
+      nbCols = 5
+      nbRows = 5
+      nbBombs = 5
+      break;
+    case 'lvl1':
+      nbCols = 20
+      nbRows = 20
+      nbBombs = 50
+      break;
+    case 'lvl2':
+      nbCols = 30
+      nbRows = 20
+      nbBombs = 75
+      break;
+    case 'lvl3':
+      nbCols = 30
+      nbRows = 25
+      nbBombs = 110
+      break;
+    case 'lvl4':
+      nbCols = 30
+      nbRows = 30
+      nbBombs = 200
+      break;
+  }
+  restart()
+  topFunction()
+}
+
 function setup() {
+  formLevel = document.getElementById("selectLvl")
   gridTable = document.getElementById("grid")
   grid = new Grid(nbCols, nbRows, nbBombs)
-  for(let y = 0; y < nbCols; y++) {
+  for(let y = 0; y < nbRows; y++) {
     let col = document.createElement("tr")
     gridTable.appendChild(col)
-    for(let x = 0; x < nbRows; x++) {
+    for(let x = 0; x < nbCols; x++) {
       let cell = document.createElement("td")
       cell.innerText = grid.cells[x][y].isBomb? "B" : grid.cells[x][y].nbBombsNeighbour
       cell.id = coordToIndex(x, y, nbCols, nbRows)
@@ -85,4 +124,19 @@ function setup() {
 
     }
   }
+
+  formLevel.addEventListener("submit", function(event) {
+    event.preventDefault()
+    for (var i = 0; i < event.target.length - 1 ; i++) {
+      if (event.target[i].checked) {
+        changeLevel(event.target[i].value)
+        break;
+      }
+    }
+  })
 }
+
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+} 
