@@ -1,0 +1,30 @@
+table {
+  border-collapse: collapse;
+}
+table, td {
+  border: 1px solid #000;
+}
+
+td {
+  padding: 0.5em;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */     
+}
+
+.hidden {
+  background-color: gray;
+  color: gray;
+  color: transparent;
+  
+}
+
+.flag {
+  background-image: url(./outlined_flag-24px.svg);
+  height: 100%;
+}
