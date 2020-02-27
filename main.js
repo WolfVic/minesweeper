@@ -1,5 +1,5 @@
 let grid
-let nbBombs = 80
+let nbBombs = 50
 let nbCols = 20
 let nbRows = 20
 let gridTable
