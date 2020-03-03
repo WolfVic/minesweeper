@@ -8,7 +8,8 @@ class Grid {
     this.generateBombs()
     this.calcNeighbour()
     this.nbFlags = 0
-    this.nbCells = 0
+    this.nbCellsClicked = 0
+    this.win = false
   }
 
   createCells() {
@@ -44,6 +45,7 @@ class Grid {
     let cell = this.cells[coord.x][coord.y]
     if (cell.hidden && !cell.flag) {
       let res = cell.reveal()
+      this.nbCellsClicked++
       if (res.isBomb) return true
       else {
         if (res.nbBombsNeighbour == 0) {
@@ -51,7 +53,10 @@ class Grid {
         }
       }
     }
-    return false
+    if (this.nbCellsClicked == nbCols * nbRows - nbBombs) {
+      this.win = true
+      return true
+    }
   }
 
   extension(coord) {

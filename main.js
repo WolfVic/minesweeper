@@ -6,6 +6,18 @@ let gridTable
 let formLevel
 
 window.addEventListener("DOMContentLoaded", function(event) {
+  formLevel = document.getElementById("selectLvl")
+  gridTable = document.getElementById("grid")
+  formLevel.addEventListener("submit", function(event) {
+    event.preventDefault()
+    for (var i = 0; i < 5; i++) {
+      if (event.target[i].checked) {
+        console.log(i)
+        changeLevel(event.target[i].value)
+        break;
+      }
+    }
+  })
   setup()
 });
 
@@ -59,32 +71,32 @@ function refresh() {
 }
 
 function changeLevel(level) {
-  console.log(level)
+  // console.log(level)
   switch (level) {
     case 'lvl0':
-      nbCols = 5
-      nbRows = 5
-      nbBombs = 5
+      nbCols = 8
+      nbRows = 8
+      nbBombs = 10
       break;
     case 'lvl1':
-      nbCols = 20
-      nbRows = 20
-      nbBombs = 50
+      nbCols = 16
+      nbRows = 16
+      nbBombs = 40
       break;
     case 'lvl2':
-      nbCols = 30
-      nbRows = 20
-      nbBombs = 75
+      nbCols = 15
+      nbRows = 13
+      nbBombs = 40
       break;
     case 'lvl3':
       nbCols = 30
-      nbRows = 25
-      nbBombs = 110
+      nbRows = 16
+      nbBombs = 99
       break;
     case 'lvl4':
       nbCols = 30
-      nbRows = 30
-      nbBombs = 200
+      nbRows = 16
+      nbBombs = 150
       break;
   }
   restart()
@@ -92,8 +104,6 @@ function changeLevel(level) {
 }
 
 function setup() {
-  formLevel = document.getElementById("selectLvl")
-  gridTable = document.getElementById("grid")
   grid = new Grid(nbCols, nbRows, nbBombs)
   for(let y = 0; y < nbRows; y++) {
     let col = document.createElement("tr")
@@ -108,7 +118,7 @@ function setup() {
         const finished = grid.click(coord)
         refresh()
         if (finished) {
-          finish(false)
+          finish(grid.win)
         }
       })
       cell.addEventListener('contextmenu', function(event) {
@@ -125,15 +135,6 @@ function setup() {
     }
   }
 
-  formLevel.addEventListener("submit", function(event) {
-    event.preventDefault()
-    for (var i = 0; i < event.target.length - 1 ; i++) {
-      if (event.target[i].checked) {
-        changeLevel(event.target[i].value)
-        break;
-      }
-    }
-  })
 }
 
 function topFunction() {
